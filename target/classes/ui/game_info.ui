@@ -1,0 +1,207 @@
+{
+  "vbox#main_menu": {
+    "pad": "5",
+    "c": "#43474f",
+    "const#const": {
+      "x": "stick(LEFT, pixel(20))",
+      "y": "stick(TOP, pixel(20))",
+      "w": "rel(0.20)",
+      "h": "rel(0.25)"
+    },
+    "bar#top_bar": {
+      "c": "#0d0d0d",
+      "fam": "drag_bars",
+      "const#top_bar_const": {
+        "h": "pixel(25)"
+      },
+      "label#file_label": {
+        "@bar_label": "all",
+        "txt": "Game data",
+        "const#file_label_const": {
+          "x": "stick(LEFT)",
+          "y": "stick(TOP)"
+        }
+      },
+      "label#close_label": {
+        "ff": "bold",
+        "fs": "20",
+        "fc": "WHITE",
+        "txt": "X",
+        "c": "DARK_RED",
+        "pad": "5,3,3,2",
+        "rad": "0",
+        "const#close_label_const": {
+          "x": "stick(RIGHT)",
+          "y": "stick(TOP)",
+          "h": "rel(1)"
+        }
+      }
+    },
+    "vbox#camera_vbox": {
+      "c": "TRANSPARENT",
+      "pad": "5,0,0,0",
+      "const#camera_vbox_const": {
+        "x": "center",
+        "y": "stick(TOP)",
+        "w": "rel(1)"
+      },
+      "hbox#stats_container": {
+        "c": "TRANSPARENT",
+        "pad": "0",
+        "const#stats_const": {
+          "x": "stick(LEFT)",
+          "y": "stick(TOP)",
+          "w": "stick(RIGHT, pixel(5))",
+          "h": "rel(1)"
+        },
+        "label#fps_label": {
+          "@textbox_label2": "all",
+          "txt": "fps",
+          "c": "#5e5d5d",
+          "const#fps_label_const": {
+            "X": "pixel(5)",
+            "y": "stick(TOP)"
+          }
+        },
+        "label#fps_value": {
+          "@textbox_label2": "all",
+          "txt": "60",
+          "rad": "0,5,5,0",
+          "c": "#0d0d0d",
+          "const#fps_label_const": {
+            "y": "stick(TOP)"
+          }
+        },
+        "label#ups_label": {
+          "@textbox_label2": "all",
+          "txt": "ups",
+          "c": "#5e5d5d",
+          "const#ups_label_const": {
+            "X": "pixel(5)",
+            "y": "stick(TOP)"
+          }
+        },
+        "label#ups_value": {
+          "@textbox_label2": "all",
+          "txt": "20",
+          "rad": "0,5,5,0",
+          "c": "#0d0d0d",
+          "const#ups_label_const": {
+            "y": "stick(TOP)"
+          }
+        }
+      },
+      "hbox#x_container": {
+        "c": "TRANSPARENT",
+        "pad": "0,5,0,5",
+        "const#x_const": {
+          "x": "stick(LEFT)",
+          "y": "stick(TOP)",
+          "w": "stick(RIGHT, pixel(5))",
+          "h": "rel(1)"
+        },
+        "label#x_label": {
+          "@textbox_label2": "all",
+          "txt": "x",
+          "const#x_label_const": {
+            "x": "stick(LEFT, pixel(5))",
+            "y": "stick(TOP)",
+            "w": "rel(1, pixel(-20))"
+          }
+        },
+        "label#xval_label": {
+          "@textbox_label": "all",
+          "const#xval_label_const": {
+            "x": "stick(RIGHT, pixel(-5))#camera_vbox_x_label_constraint",
+            "y": "stick(TOP)",
+            "w": "rel(1, pixel(-20))"
+          }
+        },
+        "tbox#xval_tbox": {
+          "@textbox": "all",
+          "txt": "enter x",
+          "fam": "tbox",
+          "const#xval_tbox_const": {
+            "x": "stick(RIGHT, pixel(10))",
+            "y": "stick(TOP)",
+            "w": "stick(RIGHT)"
+          }
+        }
+      },
+      "hbox#y_container": {
+        "c": "TRANSPARENT",
+        "pad": "0,5,0,5",
+        "const#y_const": {
+          "x": "stick(LEFT)",
+          "y": "stick(TOP)",
+          "w": "stick(RIGHT, pixel(5))",
+          "h": "rel(1)"
+        },
+        "label#y_label": {
+          "@textbox_label2": "all",
+          "txt": "y",
+          "const#y_label_const": {
+            "x": "stick(LEFT, pixel(5))",
+            "y": "stick(TOP)",
+            "w": "rel(1, pixel(-20))"
+          }
+        },
+        "label#yval_label": {
+          "@textbox_label": "all",
+          "const#xval_label_const": {
+            "x": "stick(RIGHT, pixel(-5))#camera_vbox_x_label_constraint",
+            "y": "stick(TOP)",
+            "w": "rel(1, pixel(-20))"
+          }
+        },
+        "tbox#yval_tbox": {
+          "@textbox": "all",
+          "txt": "enter y",
+          "fam": "tbox",
+          "const#camera_vbox_yval_tbox_constraint": {
+            "@textbox_const": "all"
+          }
+        }
+      },
+      "hbox#z_container": {
+        "c": "TRANSPARENT",
+        "pad": "0,5,0,5",
+        "const#hbox_z_const": {
+          "x": "stick(LEFT)",
+          "y": "stick(TOP)",
+          "w": "stick(RIGHT, pixel(5))",
+          "h": "rel(1)"
+        },
+        "label#z_label": {
+          "@textbox_label2": "all",
+          "txt": "z",
+          "pad": "3,3,5,3",
+          "const#z_label_const": {
+            "x": "stick(LEFT, pixel(5))",
+            "y": "stick(TOP)",
+            "w": "rel(1, pixel(-20))"
+          }
+        },
+        "label#zval_label": {
+          "@textbox_label": "all",
+          "const#zval_label_const": {
+            "x": "stick(RIGHT, pixel(-5))",
+            "y": "stick(TOP)",
+            "w": "rel(1, pixel(-20))"
+          }
+        },
+        "tbox#zval_tbox": {
+          "fam": "tbox",
+          "@textbox": "all",
+          "txt": "enter z",
+          "regx": "",
+          "const#zval_tbox_const": {
+            "x": "stick(RIGHT, pixel(10))",
+            "y": "stick(TOP)",
+            "w": "stick(RIGHT)"
+          }
+        }
+      }
+    }
+  }
+}

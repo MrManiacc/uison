@@ -1,0 +1,48 @@
+{
+"@textbox": {
+    "ff": "regular",
+    "fs": "25",
+    "fc": "WHITE",
+    "ti": "5",
+    "phc": "#4a4a4a",
+    "c": "#0d0d0d",
+    "cc": "#454545",
+    "pad": "3,3,5,3",
+    "rad": "5,5,5,5",
+    "regx": "[0-9]+"
+  },
+  "@bar_label": {
+    "ff": "regular",
+    "fs": "20",
+    "fc": "#0d0d0d",
+    "ti": "5",
+    "phc": "#4a4a4a",
+    "c": "WHITE",
+    "cc": "#454545",
+    "pad": "3,3,5,3",
+    "rad": "1,1,1,1"
+  },
+  "@textbox_const": {
+    "x": "stick(RIGHT, pixel(10))",
+    "y": "stick(TOP)",
+    "w": "stick(RIGHT)"
+  },
+  "@textbox_label": {
+    "ff": "regular",
+    "fs": "25",
+    "fc": "WHITE",
+    "txt": "23.54",
+    "c": "#0d0d0d",
+    "pad": "3,3,5,3",
+    "rad": "0,5,5,0"
+  },
+  "@textbox_label2": {
+    "ff": "regular",
+    "fs": "25",
+    "fc": "WHITE",
+    "txt": "y",
+    "c": "GRAY",
+    "pad": "3",
+    "rad": "5,0,0,5"
+  }
+}

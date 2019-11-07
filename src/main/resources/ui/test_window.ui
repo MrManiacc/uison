@@ -1,0 +1,41 @@
+{
+
+  "vbox#main_menu2": {
+    "pad": "5",
+    "c": "#43474f",
+    "const#const": {
+      "x": "stick(LEFT, pixel(20))",
+      "y": "stick(BOTTOM, pixel(20))",
+      "w": "rel(0.20)",
+      "h": "rel(0.25)"
+    },
+    "bar#top_bar2": {
+      "c": "#0d0d0d",
+      "const#top_bar_const2": {
+        "h": "pixel(25)"
+      },
+      "label#file_label2": {
+        "@bar_label": "all",
+        "txt": "Game data",
+        "const#file_label_const2": {
+          "x": "stick(LEFT)",
+          "y": "stick(TOP)"
+        }
+      },
+      "label#close_label2": {
+        "ff": "bold",
+        "fs": "20",
+        "fc": "WHITE",
+        "txt": "X",
+        "c": "DARK_RED",
+        "pad": "5,3,3,2",
+        "rad": "0",
+        "const#close_label_const2": {
+          "x": "stick(RIGHT)",
+          "y": "stick(TOP)",
+          "h": "rel(1)"
+        }
+      }
+    }
+  }
+}
