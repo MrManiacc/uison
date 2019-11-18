@@ -1,0 +1,92 @@
+{
+  "block#main_menu": {
+    "pad": "0",
+    "c": "#43474f",
+    "const#const": {
+      "x": "stick(LEFT)",
+      "y": "stick(TOP)",
+      "w": "rel(1)",
+      "h": "rel(1)"
+    },
+    "bar#window_bar": {
+      "color": "#0d0d0d",
+      "fam": "drag_bars",
+      "const#top_bar_const": {
+        "h": "pixel(35)"
+      },
+      "label#window_title": {
+        "fs": "25",
+        "color": "WHITE",
+        "tc": "BLACK",
+        "text": "testing",
+        "pad": "5",
+        "const#file_label_const": {
+          "x": "stick(LEFT)",
+          "y": "stick(TOP)"
+        }
+      },
+      "label#window_close": {
+        "textFamily": "regular",
+        "fontSize": "25",
+        "textColor": "WHITE",
+        "text": "X",
+        "color": "DARK_RED",
+        "pad": "10, 10, 5, 5",
+        "rad": "0",
+        "const#close_label_const": {
+          "x": "stick(RIGHT)",
+          "y": "stick(TOP)"
+        }
+      }
+    },
+    "block#main_view": {
+      "pad": "5",
+      "background": "llama.jpg",
+      "opacity": "0.3",
+      "const#main_view_const": {
+        "x": "stick(LEFT)",
+        "y": "stick(BOTTOM)#top_bar_const",
+        "w": "rel(1)",
+        "h": "rel(0.33)"
+      },
+      "vbox#search_box": {
+        "pad": "5",
+        "color": "TRANSPARENT",
+        "const#search_box_const": {
+          "x": "center",
+          "y": "rel(0.2)",
+          "w": "rel(0.8)"
+        },
+        "label#search_label": {
+          "textFamily": "bold",
+          "fontSize": "50",
+          "textColor": "WHITE",
+          "text": "FIND YOUR FORTNITE STATS",
+          "color": "DARK_RED",
+          "pad": "10, 10, 5, 5",
+          "rad": "0",
+          "const#close_label_const": {
+            "x": "center",
+            "y": "stick(TOP)"
+          }
+        },
+        "tbox#xval_tbox": {
+          "textFamily": "light",
+          "fontSize": "25",
+          "textColor": "WHITE",
+          "indent": "7",
+          "color": "#0d0d0d",
+          "hover": "#0d0d0d",
+          "pad": "3,3,5,3",
+          "rad": "3",
+          "txt": "Enter your epic name...",
+          "const#xval_tbox_const": {
+            "y": "stick(TOP)",
+            "x": "center",
+            "w": "rel(0.33)"
+          }
+        }
+      }
+    }
+  }
+}

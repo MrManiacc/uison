@@ -1,17 +1,17 @@
 package me.jraynor.bootstrap;
 
-public interface IEngine {
+public abstract class IEngine {
     //Called before window is created
-    void preInit();
+    public void preInit(){}
 
     //Called after window is created but before loop
-    void postInit();
+    public void postInit(){}
 
     //Called as many times as possible, delta being the time passed since last call
-    void render(double delta);
+    public void render(double delta){}
 
     //Called a fixed number of times, tick being the time passed since last call (should be static amount)
-    void update(double tick);
+    public void update(double tick){}
 
-    void renderUI(double delta);
+    public void renderUI(double delta){}
 }

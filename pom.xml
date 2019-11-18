@@ -5,8 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.jraynor</groupId>
-    <artifactId>UserInterfaceLib</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>uison-core</artifactId>
+    <version>01</version>
+    <packaging>jar</packaging>
+    <name>uison-core</name>
+
     <build>
         <resources>
             <resource>
@@ -16,13 +19,62 @@
                 </includes>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>me.jraynor.TestRunner</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>10</source>
+                    <target>10</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <server>mytomcat7</server>
+                    <path>/</path>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>shaded</shadedClassifierName>
+                            <minimizeJar>true</minimizeJar>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
     <properties>
         <lwjgl.version>3.2.3</lwjgl.version>
         <joml.version>1.9.19</joml.version>
         <lwjgl.natives>natives-windows</lwjgl.natives>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>12</maven.compiler.target>
+        <maven.compiler.source>12</maven.compiler.source>
         <jme3_g>org.jmonkeyengine</jme3_g>
         <jme3_v>3.2.0-stable</jme3_v>
     </properties>
@@ -59,6 +111,11 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.21</version>
+        </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>

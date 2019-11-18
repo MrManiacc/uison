@@ -2,7 +2,7 @@ package me.jraynor.bootstrap;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.jraynor.misc.Input;
+import me.jraynor.uison.misc.Input;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -37,7 +37,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Window {
     @Getter
     private int width, height;
-    private boolean fullscreen = false, resizeable, vSync;
+    private boolean bordered = false, resizeable, vSync;
+    @Getter
     private String title;
     private long window;
     @Getter
@@ -46,8 +47,10 @@ public class Window {
     @Setter
     private boolean resized = false;
     private ByteBuffer lightFont, boldFont, semiBold, extraBold, regularFont, italic;
+    public static Window INSTANCE;
 
     public Window(int width, int height, boolean fullscreen, boolean resizeable, boolean vSync, String title) {
+        INSTANCE = this;
         try {
             this.lightFont = ioResourceToByteBuffer("src/main/resources/fonts/OpenSans-Light.ttf", 512 * 1024);
             this.semiBold = ioResourceToByteBuffer("src/main/resources/fonts/OpenSans-Semibold.ttf", 512 * 1024);
@@ -61,11 +64,15 @@ public class Window {
         }
         this.width = width;
         this.height = height;
-        this.fullscreen = fullscreen;
+        this.bordered = fullscreen;
         this.resizeable = resizeable;
         this.vSync = vSync;
         this.title = title;
     }
+    public void setPosition(int x, int y) {
+        glfwSetWindowPos(window, x, y);
+    }
+
 
     private ByteBuffer ioResourceToByteBuffer(String resource, int bufferSize) throws IOException {
         ByteBuffer buffer;
@@ -109,8 +116,8 @@ public class Window {
     }
 
 
-    public Window(int width, int height, boolean fullscreen) {
-        this(width, height, fullscreen, false, false, "JEngine");
+    public Window(int width, int height, boolean bordered) {
+        this(width, height, bordered, false, false, "JEngine");
     }
 
     public Window(int width, int height) {
@@ -161,9 +168,10 @@ public class Window {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        if (fullscreen) {
+
+        if (bordered) {
             Logger.info("Attempting to create a windowed full screen window");
-            //Not working
+            glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
         }
     }
 
@@ -239,6 +247,11 @@ public class Window {
         glClearColor(0, 0, 0, 0.0f);
     }
 
+    private static final long SECOND = 1000000000L;
+
+    private double getTime() {
+        return (double) System.nanoTime() / (double) SECOND;
+    }
 
     /**
      * Handles the update and render method
@@ -247,13 +260,24 @@ public class Window {
      */
     private void loopCallback(IEngine engine) {
         long passed = System.currentTimeMillis();
-        long counter = 0;
+        int frames = 0;
+        double frameCounter = 0;
+        double lastTime = getTime();
         while (!glfwWindowShouldClose(window)) {
+            double startTime = getTime();
+            double passedTime = startTime - lastTime;
+            lastTime = startTime;
+            frameCounter += passedTime;
+
+            if (frameCounter >= 1.0) {
+                int finalFrames = frames;
+                frames = 0;
+                frameCounter = 0;
+            }
 
             long current = System.currentTimeMillis();
-            double delta =current - passed;
+            double delta = current - passed;
             passed = current;
-
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             engine.render(delta);
             nvgBeginFrame(vg, width, height, 1);
@@ -262,9 +286,9 @@ public class Window {
             nvgRestore(vg);
             nvgEndFrame(vg);
 
-
+            long ms = System.currentTimeMillis() - current;
             engine.update(delta);
-            counter = 0;
+            frames++;
             Input.update();
 
             glfwSwapBuffers(window);
@@ -284,6 +308,7 @@ public class Window {
         glfwTerminate();
         glfwSetErrorCallback(null).free();
         Logger.info("Window closed gracefully");
+        System.exit(0);
     }
 
 }
