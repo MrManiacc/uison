@@ -3,7 +3,9 @@ package me.jraynor.bootstrap;
 import lombok.Getter;
 import lombok.Setter;
 import me.jraynor.uison.misc.Input;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.nanovg.NanoVGGL2;
@@ -46,25 +48,29 @@ public class Window {
     @Getter
     @Setter
     private boolean resized = false;
+    @Getter
+    private boolean fullscreen;
+    @Setter
     private ByteBuffer lightFont, boldFont, semiBold, extraBold, regularFont, italic;
     public static Window INSTANCE;
 
-    public Window(int width, int height, boolean fullscreen, boolean resizeable, boolean vSync, String title) {
+    public Window(int width, int height, boolean fullscreen, boolean bordered, boolean resizeable, boolean vSync, String title) {
         INSTANCE = this;
-        try {
-            this.lightFont = ioResourceToByteBuffer("src/main/resources/fonts/OpenSans-Light.ttf", 512 * 1024);
-            this.semiBold = ioResourceToByteBuffer("src/main/resources/fonts/OpenSans-Semibold.ttf", 512 * 1024);
-            this.boldFont = ioResourceToByteBuffer("src/main/resources/fonts/OpenSans-Bold.ttf", 512 * 1024);
-            this.extraBold = ioResourceToByteBuffer("src/main/resources/fonts/OpenSans-ExtraBold.ttf", 512 * 1024);
-            this.italic = ioResourceToByteBuffer("src/main/resources/fonts/OpenSans-Italic.ttf", 512 * 1024);
-            this.regularFont = ioResourceToByteBuffer("src/main/resources/fonts/OpenSans-Regular.ttf", 512 * 1024);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            this.lightFont = ioResourceToByteBuffer("src/main/resources/fonts/light.ttf", 512 * 1024);
+//            this.semiBold = ioResourceToByteBuffer("src/main/resources/fonts/semibold.ttf", 512 * 1024);
+//            this.boldFont = ioResourceToByteBuffer("src/main/resources/fonts/bold.ttf", 512 * 1024);
+//            this.extraBold = ioResourceToByteBuffer("src/main/resources/fonts/extrabold.ttf", 512 * 1024);
+//            this.italic = ioResourceToByteBuffer("src/main/resources/fonts/italic.ttf", 512 * 1024);
+//            this.regularFont = ioResourceToByteBuffer("src/main/resources/fonts/regular.ttf", 512 * 1024);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        this.fullscreen = fullscreen;
         this.width = width;
         this.height = height;
-        this.bordered = fullscreen;
+        this.bordered = bordered;
         this.resizeable = resizeable;
         this.vSync = vSync;
         this.title = title;
@@ -74,7 +80,7 @@ public class Window {
         glfwSetWindowPos(window, x, y);
     }
 
-
+    @Deprecated
     private ByteBuffer ioResourceToByteBuffer(String resource, int bufferSize) throws IOException {
         ByteBuffer buffer;
 
@@ -109,6 +115,13 @@ public class Window {
         return buffer;
     }
 
+    /**
+     * Called when the window is resized
+     *
+     * @param buffer
+     * @param newCapacity
+     * @return
+     */
     private ByteBuffer resizeBuffer(ByteBuffer buffer, int newCapacity) {
         ByteBuffer newBuffer = BufferUtils.createByteBuffer(newCapacity);
         buffer.flip();
@@ -116,14 +129,6 @@ public class Window {
         return newBuffer;
     }
 
-
-    public Window(int width, int height, boolean bordered) {
-        this(width, height, bordered, false, false, "JEngine");
-    }
-
-    public Window(int width, int height) {
-        this(width, height, false);
-    }
 
     /**
      * Start the window
@@ -174,6 +179,10 @@ public class Window {
             Logger.info("Attempting to create a windowed full screen window");
             glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
         }
+
+        if (fullscreen) {
+            glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+        }
     }
 
 
@@ -201,9 +210,11 @@ public class Window {
         if (modernOpenGL) {
             int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
             vg = NanoVGGL3.nvgCreate(flags);
+            System.out.println("here not");
         } else {
             int flags = NanoVGGL2.NVG_STENCIL_STROKES | NanoVGGL2.NVG_ANTIALIAS;
             vg = NanoVGGL2.nvgCreate(flags);
+            System.out.println("here");
         }
         nvgCreateFontMem(vg, "regular", regularFont, 0);
         nvgCreateFontMem(vg, "light", lightFont, 0);
@@ -245,7 +256,6 @@ public class Window {
         glfwSwapInterval(vSync ? 1 : 0);
         glfwShowWindow(window);
         GL.createCapabilities();
-        glClearColor(0, 0, 0, 0.0f);
     }
 
     private static final long SECOND = 1000000000L;
@@ -259,7 +269,7 @@ public class Window {
      *
      * @param engine the class to be updated
      */
-    private void loopCallback(IEngine engine) {
+    private void loopCallback(@NotNull IEngine engine) {
         long passed = System.currentTimeMillis();
         long lastTime = System.nanoTime();
         final double ticks = engine.getTick();
@@ -281,7 +291,9 @@ public class Window {
             }
 
 
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
             engine.render(d);
             nvgBeginFrame(vg, width, height, 1);
             nvgSave(vg);

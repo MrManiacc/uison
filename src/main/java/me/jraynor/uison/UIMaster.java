@@ -29,19 +29,19 @@ public class UIMaster {
     private static final UIComponent root = new UIComponent();
     private static final UIConstraint rootConstraints = new UIConstraint();
     private static Controller controller;
-    //    private static final Parser PARSER = new  ();
-    private static final Parser PARSER = new ParserJson();
+    private static Parser PARSER;
     private static final HashMap<String, MappedImport> imports = new HashMap<>();
     private static final HashMap<String, List<MappedUIComponent>> componentGroups = new HashMap<>();
     private static final HashMap<String, MappedUIComponent> components = new HashMap<>();
     private static final HashMap<UIType, List<MappedUIComponent>> componentTagGroups = new HashMap<>();
     private static final UIBlock displayBlock = new UIBlock();
-    private static final UIWatcher watcher = new UIWatcher("src/main/resources/ui");
+//    private static final UIWatcher watcher = new UIWatcher("src/main/resources/ui");
     private static boolean reloadLater = false;
     private static final HashMap<String, List<String>> fileComponentID = new HashMap<>();
     private static final Map<String, UIImage> loadedImages = new HashMap<>();
 
-    public static void createUIMaster(Window window, Controller controller) {
+    public static void createUIMaster(String parserLocation, Window window, Controller controller) {
+        PARSER = new ParserJson(parserLocation);
         UIMaster.controller = controller;
         root.setVg(window.getVg());
         rootConstraints.setXConst(new PixelConstraint(0));
@@ -53,7 +53,7 @@ public class UIMaster {
         root.add(displayBlock);
         PARSER.parse();
         loadImages(window.getVg());
-        new Thread(watcher).start();
+//        new Thread(watcher).start();
     }
 
     public static void showDisplayBlock(UIConstraint constraint) {

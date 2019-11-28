@@ -23,8 +23,9 @@ import static me.jraynor.uison.parser.UIType.UIUNKOWN;
 
 public class ParserJson extends Parser {
 
-    public ParserJson() {
-        super("src/main/resources/ui/");
+
+    public ParserJson(String directory) {
+        super(directory);
     }
 
     public void parse() {

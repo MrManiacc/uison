@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="uison" />
+        <module name="uison-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="12" />

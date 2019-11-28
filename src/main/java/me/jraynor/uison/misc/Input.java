@@ -33,11 +33,12 @@ public class Input {
 
     public static long DEFAULT_CURSOR = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
     public static long TEXT_CURSOR = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+
     public static boolean keyDown(int key) {
         return activeKeys[key];
     }
 
-    public static void setCursor(long cursor){
+    public static void setCursor(long cursor) {
         glfwSetCursor(window, cursor);
     }
 
@@ -51,6 +52,26 @@ public class Input {
                 return true;
         return false;
     }
+
+    public static String getKeysDownString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        boolean active = false;
+        for (int i = 0; i < activeKeys.length; i++) {
+            if (activeKeys[i]) {
+                active = true;
+                sb.append("(").append((char) i);
+                sb.append(", ").append(i).append("), ");
+            }
+        }
+        if (active)
+            sb.replace(sb.length() - 2, sb.length(), "");
+        sb.append("]");
+        if (active)
+            return sb.toString();
+        return "";
+    }
+
 
     public static Vector2d globalMouse() {
         glfwGetCursorPos(window, globalMX, globalMY);

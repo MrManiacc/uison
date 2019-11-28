@@ -72,7 +72,7 @@
     <properties>
         <lwjgl.version>3.2.3</lwjgl.version>
         <joml.version>1.9.19</joml.version>
-        <lwjgl.natives>natives-windows</lwjgl.natives>
+        <lwjgl.natives>natives-macos</lwjgl.natives>
         <maven.compiler.target>12</maven.compiler.target>
         <maven.compiler.source>12</maven.compiler.source>
         <jme3_g>org.jmonkeyengine</jme3_g>
@@ -239,6 +239,17 @@
             <groupId>org.joml</groupId>
             <artifactId>joml</artifactId>
             <version>${joml.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>16.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>16.0.2</version>
         </dependency>
     </dependencies>
 </project>

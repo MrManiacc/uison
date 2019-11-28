@@ -112,7 +112,7 @@ public class Props {
                             if (!isImage(id.toLowerCase(), value)) {
                                 if (!id.toLowerCase().equalsIgnoreCase("fam")) {
                                     props.put(id.toLowerCase(), value);
-                                    System.err.println("Unknown value at id: " + id.toLowerCase() + ", '" + value + "', assigning as a string");
+//                                    System.err.println("Unknown value at id: " + id.toLowerCase() + ", '" + value + "', assigning as a string");
                                 }
                             }
                         }
