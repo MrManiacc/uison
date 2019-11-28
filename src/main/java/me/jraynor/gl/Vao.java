@@ -193,6 +193,7 @@ public class Vao {
         for (Vbo vbo : dataVbos) {
             vbo.delete();
         }
+        if(indexVbo != null)
         indexVbo.delete();
     }
 

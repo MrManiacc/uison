@@ -69,6 +69,7 @@ public class Window {
         this.vSync = vSync;
         this.title = title;
     }
+
     public void setPosition(int x, int y) {
         glfwSetWindowPos(window, x, y);
     }
@@ -260,36 +261,35 @@ public class Window {
      */
     private void loopCallback(IEngine engine) {
         long passed = System.currentTimeMillis();
-        int frames = 0;
-        double frameCounter = 0;
-        double lastTime = getTime();
+        long lastTime = System.nanoTime();
+        final double ticks = engine.getTick();
+        double ns = 1000000000 / ticks;
+        double delta = 0;
         while (!glfwWindowShouldClose(window)) {
-            double startTime = getTime();
-            double passedTime = startTime - lastTime;
-            lastTime = startTime;
-            frameCounter += passedTime;
 
-            if (frameCounter >= 1.0) {
-                int finalFrames = frames;
-                frames = 0;
-                frameCounter = 0;
+
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            long current = System.currentTimeMillis();
+            float d = current - passed;
+            passed = current;
+            engine.update(d);
+            while (delta >= 1) {
+                engine.tick((float) delta);
+                delta--;
             }
 
-            long current = System.currentTimeMillis();
-            double delta = current - passed;
-            passed = current;
+
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-            engine.render(delta);
+            engine.render(d);
             nvgBeginFrame(vg, width, height, 1);
             nvgSave(vg);
-            engine.renderUI(delta);
+            engine.renderUI(d);
             nvgRestore(vg);
             nvgEndFrame(vg);
-
-            long ms = System.currentTimeMillis() - current;
-            engine.update(delta);
-            frames++;
             Input.update();
+
 
             glfwSwapBuffers(window);
             glfwPollEvents();

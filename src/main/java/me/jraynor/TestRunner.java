@@ -13,6 +13,7 @@ public class TestRunner extends IEngine {
     private final Window window;
 
     private TestRunner(int width, int height, String title) {
+        super(60D);
         window = new Window(width, height, true, false, true, title);
         window.start(this);
     }

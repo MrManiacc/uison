@@ -19,15 +19,15 @@ public class Camera {
         this.fov = fov;
         this.near = near;
         this.far = far;
-        this.aspect = 1920 / 1080.0f;
+        this.aspect = (float) window.getWidth() / (float) window.getHeight();
         projectionMatrix = new Matrix4f().identity();
         viewMatrix = new Matrix4f().identity();
         vp = new Matrix4f().identity();
         setPerspective();
     }
 
-    public void toggleView(){
-        if(perspective)
+    public void toggleView() {
+        if (perspective)
             setOrthographic();
         else
             setPerspective();

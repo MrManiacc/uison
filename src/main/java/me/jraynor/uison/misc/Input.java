@@ -208,7 +208,6 @@ public class Input {
     public static void update() {
         resetKeyboard();
         resetMouse();
-        glfwPollEvents();
     }
 
     private static void resetKeyboard() {
@@ -221,11 +220,11 @@ public class Input {
         long now = System.nanoTime();
 
         if (now - lastMouseNS > mouseDoubleClickPeriodNS) {
-            mouseDelta.x = 0;
-            mouseDelta.y = 0;
+//            mouseDelta.x = 0;
+//            mouseDelta.y = 0;
             lastMouseNS = 0;
-            mouseWheelVelocity = 0;
-            keyDown = false;
+//            mouseWheelVelocity = 0;
+//            keyDown = false;
         }
     }
 }
